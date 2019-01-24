@@ -1,0 +1,295 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="dan" id="18">
+        <createTable tableName="user_table">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+            </column>
+            <column name="last_login" type="datetime(6)">
+            </column>
+            <column name="ip_address" type="VARCHAR(100)">
+            </column>
+            <column name="login_attempts" type="VARCHAR(100)">
+            </column>
+            <column name="stakeholder_staff" type="VARCHAR(100)">
+            </column>
+            <column name="blocked" type="BOOLEAN">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="19">
+        <createTable tableName="staff">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="stakeholder_staff" type="VARCHAR(100)">
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+            </column>
+            <column name="job_title _id" type="INT">
+            </column>
+            <column name="citizen_id" type="INT">
+            </column>
+            <column name="title_of_courtersy" type="VARCHAR(100)">
+            </column>
+            <column name="address_id" type="BOOLEAN">
+            </column>
+            <column name="date_of_birth" type="datetime(6)">
+            </column>
+            <column name="hire_date" type="datetime(6)">
+            </column>
+            <column name="staff_notes" type="VARCHAR(100)">
+            </column>
+            <column name="staff_report_id" type="VARCHAR(100)">
+            </column>
+            <column name="photo_id" type="INT">
+            </column>
+            <column name="staff_status_id" type="INT">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="20">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="21">
+        <createTable tableName="permission">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="menu_id" type="INT">
+            </column>
+            <column name="user_role_id" type="INT">
+            </column>
+            <column name="view_allowed" type="INT">
+            </column>
+            <column name="add_allowed" type="INT">
+            </column>
+            <column name="edit_allowed" type="INT">
+            </column>
+            <column name="delete_allowed" type="INT">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="22">
+        <createTable tableName="stakeholder">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="23">
+        <createTable tableName="stakeholder_staff">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="24">
+        <createTable tableName="stakeholder_table">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT">
+            </column>
+            <column name="name" type="VARCHAR(100)">
+            </column>
+            <column name="logo_id" type="INT">
+            </column>
+            <column name="type_id" type="INT">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="26">
+        <addColumn
+                   schemaName="public"
+                   tableName="user_table">
+            <column name="createdAt" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="27">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="deletedAt" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="28">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="createdBy" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="29">
+        <createTable tableName="job_title">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="30">
+        <dropColumn
+                    columnName="createdAt"
+                    schemaName="public"
+                    tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="31">
+        <dropColumn
+                columnName="deletedAt"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="32">
+        <dropColumn
+                columnName="createdBy"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="33">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="created_at" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="34">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="deleted_at" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="35">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="created_by" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="36">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="last_updated_at" type="datetime(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="37">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="username" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="dan" id="46">
+        <dropColumn
+                columnName="blocked"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="47">
+        <dropColumn
+                columnName="password"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="48">
+        <dropColumn
+                columnName="created_by"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="49">
+        <dropColumn
+                columnName="username"
+                schemaName="public"
+                tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="50">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="blocked" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="51">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="password" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="52">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="created_by" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dan" id="53">
+        <addColumn
+                schemaName="public"
+                tableName="user_table">
+            <column name="username" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="dan" id="54">
+        <dropTable cascadeConstraints="true"
+                   schemaName="public"
+                   tableName="user_table"/>
+    </changeSet>
+    <changeSet author="dan" id="56" runOnChange="true">
+        <createTable tableName="user_table">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login" type="datetime(6)">
+            </column>
+            <column name="ip_address" type="VARCHAR(100)">
+            </column>
+            <column name="login_attempts" type="INT">
+            </column>
+            <column name="stakeholder_staff" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blocked" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_at" type="datetime(6)"/>
+            <column name="created_at" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="datetime(6)"/>
+            <column name="created_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,130 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="dan" id="1" >
+        <createTable tableName="users_table">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_address" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login" type="datetime(6)">
+            </column>
+            <column name="ip_address" type="VARCHAR(100)">
+            </column>
+            <column name="login_attempts" type="INT">
+            </column>
+            <column name="blocked" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stakeholder" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_at" type="datetime(6)"/>
+            <column name="deleted_at" type="datetime(6)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="dan" id="2">
+        <createTable tableName="stakeholder">
+            <column name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+            </column>
+            <column name="stakeholder_type" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="dan" id="3">
+        <createTable tableName="stakeholder_type">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="dan" id="4">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_name" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="dan" id="5">
+        <addForeignKeyConstraint baseColumnNames="stakeholder" baseTableName="users_table"
+                                 constraintName="fk_user_stakeholder" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="stakeholder"/>
+    </changeSet>
+    <changeSet author="dan" id="6">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="users_table"
+                                 constraintName="fk_user_created_by" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users_table"/>
+    </changeSet>
+    <changeSet author="dan" id="7">
+        <createTable tableName="permission">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="menu_id" type="INT">
+            </column>
+            <column name="user_role_id" type="INT">
+            </column>
+            <column name="view_allowed" type="INT">
+            </column>
+            <column name="add_allowed" type="INT">
+            </column>
+            <column name="edit_allowed" type="INT">
+            </column>
+            <column name="delete_allowed" type="INT">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dan" id="8">
+        <dropColumn
+                    columnName="user_name"
+                    schemaName="public"
+                    tableName="role"/>
+    </changeSet>
+    <changeSet author="dan" id="9">
+        <addColumn
+                   schemaName="public"
+                   tableName="role">
+            <column name="username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>
