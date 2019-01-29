@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @AllArgsConstructor
@@ -12,22 +13,12 @@ import javax.persistence.*;
 @Data
 @Entity()
 @Table(name = "stakeholder")
-public class Stakeholder {
+public class Stakeholder  implements Serializable {
     @Id
-    public int id;
-    @Column(name = "user_id")
-    public String userId;
-
-    @Column(name = "name")
-    public String name;
-
-    @Column(name = "logo_id")
-    public String logoId;
-
-    @Column(name = "type_id")
-    public String typeId;
+    private int id;
+    private String name;
 
     @JoinColumn(name = "stakeholder_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    public StakeholderType StakeholderType;
+    private StakeholderType StakeholderType;
 }

@@ -2,12 +2,15 @@ package com.securescm.AccountService.controllers;
 
 
 import com.securescm.AccountService.Response.Response;
-import com.securescm.AccountService.entities.Userz;
+import com.securescm.AccountService.entities.User;
 import com.securescm.AccountService.models.Status;
 import com.securescm.AccountService.models.UserModel;
 import com.securescm.AccountService.models.UserRequest;
 import com.securescm.AccountService.repos.UserRepository;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,31 +24,34 @@ public class UsersController {
 
     private final UserRepository userRepository;
 
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class.getName());
+
     public UsersController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody Userz user){
+    public ResponseEntity create(@RequestBody User user){
          Status status = createUpdate(null,user);
          return ResponseEntity.ok().body(status);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Status> update(@RequestBody Userz user) {
+    public ResponseEntity<Status> update(@RequestBody User user) {
         Status status = createUpdate(null,user);
         return ResponseEntity.ok().body(status);
     }
 
-    private Status createUpdate(Integer id, Userz entity){
+    private Status createUpdate(Integer id, User entity){
         Status status ;
-        Userz user = new Userz();
+        User user = new User();
 
         if(id != null){
-            Optional<Userz> optionalUser =  userRepository.findById(id);
+            Optional<User> optionalUser =  userRepository.findById(id);
             if(optionalUser.isPresent()){
                 user = optionalUser.get();
-                user.setStakeholder(entity.getStakeholder());
+                user.setFirstName(entity.getFirstName());
+                user.setFirstName(entity.getLastName());
                 user.setPassword(entity.getPassword());
                 user.setDateLastUpdated(new Date());
                 userRepository.save(user);
@@ -54,12 +60,14 @@ public class UsersController {
               status = Response.USER_NOT_FOUND.status();
             }
         }else{
-            Userz exists = userRepository.findTop1ByUsername(entity.getUsername());
+            User exists = userRepository.findTop1ByUsername(entity.getUsername());
+
             if(exists == null) {
-                user.setCreatedBy(entity.getCreatedBy());
+                user.setFirstName(entity.getFirstName());
+                user.setFirstName(entity.getLastName());
                 user.setCreatedAt(new Date());
-                user.setStakeholder(entity.getStakeholder());
                 user.setUsername(entity.getUsername());
+                user.setEmail_address(entity.getEmail_address());
                 user.setPassword(entity.getPassword());
                 userRepository.save(user);
             }else{
@@ -74,10 +82,10 @@ public class UsersController {
 
     @GetMapping("update-attempts")
     public ResponseEntity updateAttempts(@RequestBody UserRequest request){
-      Optional<Userz> optionalUser = userRepository.findById(request.getUserId());
+      Optional<User> optionalUser = userRepository.findById(request.getUserId());
       Status status;
       if(optionalUser.isPresent()){
-          Userz user = optionalUser.get();
+          User user = optionalUser.get();
           user.setLoginAttempts(request.getNoOfAttempts());
           if(request.getNoOfAttempts() >= 5){
               user.setBlocked(true);
@@ -97,11 +105,13 @@ public class UsersController {
 
     }
 //
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody UserRequest userModel){
         String userName = userModel.getUsername();
         if(userName != null){
-            Userz user  = userRepository.findTop1ByUsername(userName);
+            log.info(userName);
+            User user  = userRepository.findTop1ByUsername(userName);
+
             if(user  != null){
                 if(user.isBlocked()){
                     return ResponseEntity.badRequest().body(Response.ACCOUNT_BLOCKED.status());
@@ -118,25 +128,20 @@ public class UsersController {
         }
     }
 
-    private UserModel getModel(Userz user){
+    private UserModel getModel(User user){
         UserModel model = null;
 
-        /*if(user != null){
+        if(user != null){
             model = new UserModel();
             model.setId(user.getId());
-            model.setFirstName(user.getFirstname());
-            model.setLastName(user.getStakeholderStaff().getStaff().getLastname());
-            model.setStaffId(user.getStakeholderStaff().getStaff().getId());
-            model.setIdNumber(user.getStakeholderStaff().getStaff().getCitizenId());
-            model.setStakeholder(user.getStakeholderStaff().getStakeholder());
-
-            if(user.getStakeholderStaff() != null) {
-
-            }
+            model.setFirstName(user.getFirstName());
+            model.setLastName(user.getLastName());
+            model.setUsername(user.getUsername());
+            model.setStakeholder(user.getStakeholder());
             model.setPassword(user.getPassword());
             model.setBlocked(user.isBlocked());
-            model.setLoginAttempts(user.getLoginAttempts());
-        }*/
+            model.setLoginAttempts(user.getLoginAttempts() != null ? user.getLoginAttempts() : 0);
+        }
         return model;
     }
 }

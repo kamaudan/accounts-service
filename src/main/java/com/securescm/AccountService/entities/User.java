@@ -14,7 +14,9 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "users_table" )
- public class Userz implements Serializable {
+ public class User implements Serializable {
+   private static final long serialVersionUID = -915643971117365650L;
+
     @Id
     private int id;
 
@@ -34,23 +36,17 @@ import java.util.Date;
     private String email_address;
 
     @JoinColumn(name = "created_by", referencedColumnName = "id")
-    private Userz createdBy;
+    @ManyToOne(optional = false)
+    private User createdBy;
 
     @Column(name = "created_at")
     private Date createdAt;
-
-
-    @Column(name = "stakeholder_id")
-    private int stakeholderId;
-
 
     @JoinColumn(name = "stakeholder", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Stakeholder stakeholder;
 
-
-
-    @Column(name = "date_last_updated")
+    @Column(name = "last_updated_at")
     private Date dateLastUpdated;
 
     @Column(name = "last_login")
@@ -60,11 +56,10 @@ import java.util.Date;
     private String ipAddress;
 
     @Column(name = "login_attempts")
-    private int loginAttempts;
+    private Integer loginAttempts;
 
     @Column(name = "blocked")
     private boolean blocked;
-
 
     @Column(name = "deleted_at")
     private Date deletedAt;

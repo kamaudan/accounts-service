@@ -1,23 +1,28 @@
 package com.securescm.AccountService.models;
 
-import com.securescm.AccountService.entities.Staff;
+import com.securescm.AccountService.entities.Permission;
 import com.securescm.AccountService.entities.Stakeholder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
- public class UserModel {
+ public class UserModel implements Serializable {
+
+
+    private static final long serialVersionUID = -3622386171997650688L;
+
     private int id;
-    private int staffId;
     private String firstName;
     private String lastName;
-    private long IdNumber;
     private Stakeholder stakeholder;
     private String username;
     private String password;
     private boolean blocked;
     private int loginAttempts;
+    private Permission permissions;
 }
