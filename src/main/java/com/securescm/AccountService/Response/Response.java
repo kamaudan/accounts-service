@@ -14,6 +14,7 @@ public enum  Response {
     NOUSERS(5, "There are no users in the database yet");
 
     private Status status;
+
     Response(final int code, final String message) {
         status = new Status(code,message);
     }

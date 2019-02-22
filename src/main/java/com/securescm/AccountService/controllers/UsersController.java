@@ -48,10 +48,11 @@ public class UsersController {
 
         if(id != null){
             Optional<User> optionalUser =  userRepository.findById(id);
+
             if(optionalUser.isPresent()){
                 user = optionalUser.get();
                 user.setFirstName(entity.getFirstName());
-                user.setFirstName(entity.getLastName());
+                user.setLastName(entity.getLastName());
                 user.setPassword(entity.getPassword());
                 user.setDateLastUpdated(new Date());
                 userRepository.save(user);
@@ -64,7 +65,7 @@ public class UsersController {
 
             if(exists == null) {
                 user.setFirstName(entity.getFirstName());
-                user.setFirstName(entity.getLastName());
+                user.setLastName(entity.getLastName());
                 user.setCreatedAt(new Date());
                 user.setUsername(entity.getUsername());
                 user.setEmail_address(entity.getEmail_address());

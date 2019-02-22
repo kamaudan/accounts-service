@@ -15,9 +15,12 @@ import java.util.Date;
 @Entity
 @Table(name = "users_table" )
  public class User implements Serializable {
-   private static final long serialVersionUID = -915643971117365650L;
 
-    @Id
+
+ private static final long serialVersionUID = -5988896537925725065L;
+ @Id
+    @GeneratedValue(generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName ="user_sequence", initialValue =  10)
     private int id;
 
     @Column(name = "first_name")
